@@ -1,0 +1,10 @@
+interface:
+  display_name: GG → Playwright → Browser Validation
+  short_description: Guarded Playwright CLI browser validation with config-driven target resolution
+  icon_small: ./assets/icon-small.svg
+  icon_large: ./assets/icon-large.png
+  brand_color: '#EF4444'
+  default_prompt: >-
+    Use when running Playwright CLI browser validation, storing artifacts under
+    /.playwright-sessions/, or handing off screenshot evidence to planning and Notion workflows.
+    Reference playwright/SKILL.md when cross-referencing this skill.
