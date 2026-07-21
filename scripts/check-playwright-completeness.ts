@@ -8,8 +8,8 @@
  * optional `--json` rollup output; it does not execute Playwright or perform filesystem I/O.
  * Flow: argv -> resolve phase -> synthesize per-item completion flags -> print score and readiness -> optional JSON.
  *
- * @testing CLI: npx tsx skills/playwright/scripts/check-playwright-completeness.ts --phase 8
- * @testing CLI: npx tsx skills/playwright/scripts/check-playwright-completeness.ts --phase 4 --json
+ * @testing CLI: npx tsx .agents/skills/playwright/scripts/check-playwright-completeness.ts --phase 8
+ * @testing CLI: npx tsx .agents/skills/playwright/scripts/check-playwright-completeness.ts --phase 4 --json
  *
  * @see skills/playwright/SKILL.md - Canonical skill prose and checklist tables this script mirrors for operator-facing scoring.
  * @see skills/playwright/scripts/lib/playwright-cli-guardrails.ts - Wrapper and session-path guardrails whose policy items align with several scored checklist gates.
