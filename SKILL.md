@@ -111,6 +111,7 @@ pwcli -s=default snapshot --filename "snapshots/01-home.yml"
 pwcli -s=default screenshot --filename "screenshots/01-home.png" --full-page
 
 # Print resolved target URLs
+# Runner alternatives: bunx tsx / pnpm dlx tsx / deno run -A npm:tsx / node --import tsx / yarn dlx tsx
 npx tsx playwright/scripts/playwright-skill-cli.ts print-targets --shell
 ```
 
@@ -125,8 +126,8 @@ For the full command catalog, see `references/cli-commands.md`.
 | Capture DOM refs for interaction | `pwcli -s=default snapshot --filename "snapshots/..."` |
 | Save a full-page screenshot | `pwcli -s=default screenshot --filename "screenshots/..." --full-page` |
 | Capture console or network logs | `pwcli -s=default console` or `pwcli -s=default network` |
-| Resolve target URLs for current checkout | `npx tsx playwright/scripts/playwright-skill-cli.ts print-targets --shell` |
-| Publish completed session artifacts | `npx tsx playwright/scripts/playwright-skill-cli.ts finalize-session --session-dir "<path>"` |
+| Resolve target URLs for current checkout | `npx tsx playwright/scripts/playwright-skill-cli.ts print-targets --shell`[^rt] |
+| Publish completed session artifacts | `npx tsx playwright/scripts/playwright-skill-cli.ts finalize-session --session-dir "<path>"`[^rt] |
 
 **Rule of thumb:** bootstrap once per validation topic, then snapshot before every interaction sequence.
 
@@ -263,6 +264,7 @@ export PLAYWRIGHT_TARGETS="WEBSITE=https://localhost:3000;API=https://localhost:
 ### Option C — `--target` flags
 
 ```bash
+# Runner alternatives: bunx tsx / pnpm dlx tsx / deno run -A npm:tsx / node --import tsx / yarn dlx tsx
 npx tsx playwright/scripts/print-playwright-targets.ts \
   --target WEBSITE=https://localhost:3000 \
   --target API=https://localhost:4000 \
@@ -285,6 +287,7 @@ This exports `PLAYWRIGHT_TARGET_<NAME>_URL` for every entry in your config, plus
 Preferred target discovery command:
 
 ```bash
+# Runner alternatives: bunx tsx / pnpm dlx tsx / deno run -A npm:tsx / node --import tsx / yarn dlx tsx
 npx tsx playwright/scripts/playwright-skill-cli.ts print-targets --json
 eval "$(npx tsx playwright/scripts/playwright-skill-cli.ts print-targets --shell)"
 ```
@@ -298,7 +301,7 @@ For diagnostic requests, run the inspection commands first before loading any re
 
 1. Bootstrap session: `npm run playwright:session:bootstrap -- --session-name "<name>"`
 2. Export `PLAYWRIGHT_MCP_OUTPUT_DIR` to the active session folder.
-3. Resolve target URLs with `npx tsx playwright/scripts/playwright-skill-cli.ts print-targets --shell`.
+3. Resolve target URLs with `npx tsx playwright/scripts/playwright-skill-cli.ts print-targets --shell`[^rt].
 4. Prefer hostnames from the host project's environment discovery mechanism (worktree info, reverse-proxy router, etc.) when available; otherwise use the URLs resolved by `print-targets`.
 5. Open target URL: `pwcli open "$URL"`
 6. Snapshot to obtain fresh refs: `pwcli -s=default snapshot --filename "snapshots/01-home.yml"`
@@ -310,7 +313,7 @@ For diagnostic requests, run the inspection commands first before loading any re
 12. Capture console and network when validating behavioral changes or failures.
 13. If failures appear during local server startup, inspect local log evidence before declaring a blocker.
 14. Validate evidence: `npm run notion:evidence:validate -- --session <session_path>`
-15. Finalize: `npx tsx playwright/scripts/playwright-skill-cli.ts finalize-session --session-dir "<session_path>"`
+15. Finalize: `npx tsx playwright/scripts/playwright-skill-cli.ts finalize-session --session-dir "<session_path>"`[^rt]
 16. Close sessions and unset `PLAYWRIGHT_MCP_OUTPUT_DIR`.
 
 ### Reference loading by task type
@@ -435,6 +438,7 @@ Every run must preserve traceability links to: source plan path, source study pa
 ```bash
 command -v npx >/dev/null 2>&1 || echo "npx missing"
 command -v playwright-cli >/dev/null 2>&1 && playwright-cli --help
+# Runner alternatives: bunx tsx / pnpm dlx tsx / deno run -A npm:tsx / node --import tsx / yarn dlx tsx
 npx tsx "$(git rev-parse --show-toplevel)/playwright/scripts/playwright-skill-cli.ts" cli --help
 ```
 
@@ -497,3 +501,5 @@ The `references/` directory contains 2 hand-authored Markdown files with no subf
 ### Canonical URLs
 
 - Playwright CLI upstream docs: https://playwright.dev/docs/intro
+
+[^rt]: `npx tsx` accepts any standard runner — `bunx tsx`, `pnpm dlx tsx`, `deno run -A npm:tsx`, `node --import tsx`, or `yarn dlx tsx`. The first five auto-fetch `tsx` on demand; only `node --import tsx` requires `tsx` to be installed locally first (`npm i -D tsx`, or `npm i -g tsx` if you cannot reach the npm registry). Bun users can also skip `tsx` entirely and run TypeScript directly via `bun <script>`. Pick whichever your project ships. The canonical runtime decision table lives in the `skills-manager` skill under `Runtime Selection` (only available when working in the full `gg-skills` monorepo).
