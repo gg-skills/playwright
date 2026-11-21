@@ -193,7 +193,7 @@ Before finalizing, verify:
 - Snapshot verified: 2026-04-30 (revised 2026-05-17).
 - If this skill file is updated, run the host project's skills sync command so IDEs pick up the new version immediately.
 - If guidance semantics changed, run the host project's agents-sync workflow before workflow closure.
-- For external docs lookup, prefer `research-online/SKILL.md` or `firecrawl/SKILL.md` before the built-in `web` tool.
+- For external docs lookup, prefer `research-online/SKILL.md` or the [Firecrawl CLI reference](https://github.com/firecrawl/cli) before the built-in `web` tool.
 
 ## Non-Negotiable Policy
 
@@ -465,4 +465,4 @@ The `references/` directory contains 2 hand-authored Markdown files with no subf
 
 - Playwright CLI upstream docs: https://playwright.dev/docs/intro
 
-[^rt]: `npx tsx` accepts any standard runner — `bunx tsx`, `pnpm dlx tsx`, `deno run -A npm:tsx`, `node --import tsx`, or `yarn dlx tsx`. The first five auto-fetch `tsx` on demand; only `node --import tsx` requires `tsx` to be installed locally first (`npm i -D tsx`, or `npm i -g tsx` if you cannot reach the npm registry). Bun users can also skip `tsx` entirely and run TypeScript directly via `bun <script>`. Pick whichever your project ships. The canonical runtime decision table lives in the `skills-manager` skill under `Runtime Selection` (only available when working in the full `gg-skills` monorepo).
+[^rt]: `npx tsx` accepts any standard runner — `bunx tsx`, `pnpm dlx tsx`, `deno run -A npm:tsx`, `node --import tsx`, or `yarn dlx tsx`. The first five auto-fetch `tsx` on demand; only `node --import tsx` requires `tsx` to be installed locally first (`npm i -D tsx`, or `npm i -g tsx` if you cannot reach the npm registry). Bun users can also skip `tsx` entirely and run TypeScript directly via `bun <script>`. Pick whichever your project ships.
