@@ -233,6 +233,8 @@ pwcli() { npx tsx "$REPO_ROOT/playwright/scripts/playwright-skill-cli.ts" cli "$
 
 If Node/npm/npx are missing, install Node.js first, then re-run the checks above.
 
+Read the [install and setup checks](references/troubleshooting.md#install-and-setup-checks) when checking Playwright CLI setup or installing missing browser binaries.
+
 ## Consumer Target Configuration
 
 This skill is config-driven: consumers must supply their own target URL list. The target printer
@@ -433,48 +435,9 @@ Every run must preserve traceability links to: source plan path, source study pa
    - Correct approach: Add `.playwright-targets.json` to the repository root, or use `--target` flags, or set `PLAYWRIGHT_TARGETS`.
    - See: Consumer Target Configuration above.
 
-## Install and Setup Checks
-
-```bash
-command -v npx >/dev/null 2>&1 || echo "npx missing"
-command -v playwright-cli >/dev/null 2>&1 && playwright-cli --help
-# Runner alternatives: bunx tsx / pnpm dlx tsx / deno run -A npm:tsx / node --import tsx / yarn dlx tsx
-npx tsx "$(git rev-parse --show-toplevel)/playwright/scripts/playwright-skill-cli.ts" cli --help
-```
-
-If `playwright-cli` is missing:
-
-```bash
-# Optional global install path
-npm install -g @playwright/cli@latest
-playwright-cli --help
-```
-
-If browser binaries are missing:
-
-```bash
-npx playwright install chromium
-```
-
 ## Troubleshooting
 
-1. `No session` / command targets wrong context:
-   - ensure `open` was called first
-   - ensure follow-up commands include `-s=default`
-2. Refs such as `e12` not found:
-   - run `snapshot` again, then retry
-3. Artifacts unexpectedly appear in `.playwright-cli/`:
-   - ensure you are using the TypeScript wrapper (`pwcli`) instead of the raw global `playwright-cli`
-   - ensure `PLAYWRIGHT_MCP_OUTPUT_DIR` is exported before `open`
-4. `print-targets` errors with "No targets found":
-   - add `.playwright-targets.json` to the repository root, or set `PLAYWRIGHT_TARGETS`, or pass `--target` flags
-   - see Consumer Target Configuration above
-5. UI blocks interactions:
-   - dismiss cookie/privacy banners, then re-snapshot
-6. App auth returns `500`:
-   - capture browser error, auth API response, and relevant server log snippets
-
-For detailed troubleshooting, see `references/troubleshooting.md`.
+Read the [troubleshooting guide](references/troubleshooting.md) when sessions, refs, artifact paths, target resolution, UI interactions, or app auth fail.
 
 ## References
 

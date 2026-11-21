@@ -1,0 +1,1 @@
+A browser window with a play button and a check mark represents a test run with verified results.

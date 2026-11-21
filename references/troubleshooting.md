@@ -1,5 +1,46 @@
 # Playwright CLI Troubleshooting
 
+## Troubleshooting
+
+1. `No session` / command targets wrong context:
+   - ensure `open` was called first
+   - ensure follow-up commands include `-s=default`
+2. Refs such as `e12` not found:
+   - run `snapshot` again, then retry
+3. Artifacts unexpectedly appear in `.playwright-cli/`:
+   - ensure you are using the TypeScript wrapper (`pwcli`) instead of the raw global `playwright-cli`
+   - ensure `PLAYWRIGHT_MCP_OUTPUT_DIR` is exported before `open`
+4. `print-targets` errors with "No targets found":
+   - add `.playwright-targets.json` to the repository root, or set `PLAYWRIGHT_TARGETS`, or pass `--target` flags
+   - see [Consumer Target Configuration](../SKILL.md#consumer-target-configuration)
+5. UI blocks interactions:
+   - dismiss cookie/privacy banners, then re-snapshot
+6. App auth returns `500`:
+   - capture browser error, auth API response, and relevant server log snippets
+
+## Install and Setup Checks
+
+```bash
+command -v npx >/dev/null 2>&1 || echo "npx missing"
+command -v playwright-cli >/dev/null 2>&1 && playwright-cli --help
+# Runner alternatives: bunx tsx / pnpm dlx tsx / deno run -A npm:tsx / node --import tsx / yarn dlx tsx
+npx tsx "$(git rev-parse --show-toplevel)/playwright/scripts/playwright-skill-cli.ts" cli --help
+```
+
+If `playwright-cli` is missing:
+
+```bash
+# Optional global install path
+npm install -g @playwright/cli@latest
+playwright-cli --help
+```
+
+If browser binaries are missing:
+
+```bash
+npx playwright install chromium
+```
+
 ## Wrong Session / No Session
 
 Symptoms:

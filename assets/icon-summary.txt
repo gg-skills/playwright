@@ -1,0 +1,1 @@
+A browser window with a play button, check mark, and red shield badge represents guarded browser validation.
